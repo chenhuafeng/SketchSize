@@ -150,6 +150,9 @@ function newArtboard(newX, newY, newW, newH) {
     newFrame.setWidth(newW)
     newFrame.setHeight(newH)
     newBoard.setName(kcurArtboard.name() + '/' + newFrame.width()*2 + '×' + newFrame.height()*2)
+    if(newFrame.width() == 375 && newFrame.height() == 812) {
+        newBoard.setName(kcurArtboard.name() + '/' + 'iPhoneX')
+    }
     if(newFrame.width() == 414) {
         newBoard.setName(kcurArtboard.name() + '/' + newFrame.width()*3 + '×' + newFrame.height()*3)
     }
