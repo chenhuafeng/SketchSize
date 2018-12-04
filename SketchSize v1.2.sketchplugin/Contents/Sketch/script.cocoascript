@@ -38,19 +38,19 @@ var klayers = kcurArtboard.layers()                    //当前选中artboard的
 
 //对targetlayer以及所有子layer进行检查，如果是MSTextLayer则对其进行字体和字间距的缩放处理，如果是MSShapeGroup则对其border进行处理，如果是MSRectangleShape则对其进行圆角的缩放处理，ratio是缩放比例
 function dealLayerProperties(targetlayer, ratio) {
-    
+
     var frameLayer = targetlayer.frame()
-    
+
     if(targetlayer.class() == MSTextLayer){
-        
+
         var fontTarlayer = targetlayer.fontSize();
         var cSpacingTarlayer = targetlayer.characterSpacing();
         targetlayer.setFontSize(fontTarlayer / ratio);
         targetlayer.setCharacterSpacing(cSpacingTarlayer / ratio);
-        
+
         var lineHeight = targetlayer.lineHeight();
         targetlayer.setLineHeight(lineHeight / ratio);
-        
+
         frameLayer .setX(frameLayer.x())
         frameLayer .setY(frameLayer.y())
         frameLayer .setWidth(frameLayer.width() + 4)
@@ -64,7 +64,7 @@ function dealLayerProperties(targetlayer, ratio) {
                 styleBorder.setThickness(borderW / ratio);
             }
         }
-        
+
         for (var i = 0; i < targetlayer.layers().count(); i++) {
             var shapeLayer = targetlayer.layers()[i];
             if (shapeLayer.class() == MSRectangleShape) {
@@ -82,15 +82,15 @@ function dealLayerProperties(targetlayer, ratio) {
                 }
             }
         }
-        
+
     }
     else if (targetlayer.class() == MSLayerGroup){
-        
+
         for (var i = 0; i < targetlayer.layers().count(); i++) {
             var layer = targetlayer.layers()[i];
             dealLayerProperties(layer, ratio);
         }
-        
+
     }
 }
 
@@ -100,7 +100,7 @@ function copyLayers(toArtboard, ratioW, ratioH) {
         var layer = klayers[i];
         var newlayer = layer.copy()
         var frameNewlayer = newlayer.frame()
-        
+
         if(ratioW > ratioH) {
             var newX = frameNewlayer.x() / ratioW
             var newY = frameNewlayer.y() / ratioW + (toArtboard.frame().height() - kcurArtboard.frame().height()/ratioW)/2
@@ -112,7 +112,7 @@ function copyLayers(toArtboard, ratioW, ratioH) {
             var newW = frameNewlayer.width() / ratioH
             var newH = frameNewlayer.height() / ratioH
         }
-        
+
         if(Math.abs(frameNewlayer.x())<5 && Math.abs(frameNewlayer.y())<5 && Math.abs(frameNewlayer.width() - kcurArtboard.frame().width())<5 && Math.abs(frameNewlayer.height() - kcurArtboard.frame().height())<5) {
             frameNewlayer.setX(0)
             frameNewlayer.setY(0)
@@ -125,7 +125,7 @@ function copyLayers(toArtboard, ratioW, ratioH) {
             frameNewlayer.setWidth(newW)
             frameNewlayer.setHeight(newH)
         }
-        
+
         // ratioW=375/540，0.69444
         // ratioH=667/960   0.6947
         if(ratioW < ratioH) {
@@ -133,7 +133,7 @@ function copyLayers(toArtboard, ratioW, ratioH) {
         } else {
             dealLayerProperties(newlayer, ratioW);
         }
-        
+
         toArtboard.addLayers([newlayer])
     }
 }
@@ -142,7 +142,7 @@ function copyLayers(toArtboard, ratioW, ratioH) {
 function newArtboard(newX, newY, newW, newH) {
     var curBoardW = kcurArtboard.frame().width()
     var curBoardH = kcurArtboard.frame().height()
-    
+
     var newBoard = MSArtboardGroup.new()
     var newFrame = newBoard.frame()
     newFrame.setX(newX)
@@ -156,14 +156,14 @@ function newArtboard(newX, newY, newW, newH) {
     if(newFrame.width() == 414) {
         newBoard.setName(kcurArtboard.name() + '/' + newFrame.width()*3 + '×' + newFrame.height()*3)
     }
-    
+
     copyLayers(newBoard, curBoardW/newFrame.width(), curBoardH/newFrame.height())
-    
+
     var backColor = kcurArtboard. backgroundColor()
     var hasBackColor = kcurArtboard. hasBackgroundColor()
     newBoard.setBackgroundColor(backColor)
     newBoard.setHasBackgroundColor(hasBackColor)
-    
+
     kcurPage.addLayers([newBoard])
 }
 
@@ -173,16 +173,16 @@ function enter() {
     var originX = kcurArtboard.frame().x()
     var originY = kcurArtboard.frame().y() + kcurArtboard.frame().height() + 100
     newArtboard(originX, originY, ip4Size1X.w, ip4Size1X.h)
-    
+
     originX = originX + ip4Size1X.w + 100
     newArtboard(originX, originY, ip5Size1X.w, ip5Size1X.h)
-    
+
     originX = originX + ip5Size1X.w + 100
     newArtboard(originX, originY, ip6Size1X.w, ip6Size1X.h)
-    
+
     originX = originX + ip6Size1X.w + 100
     newArtboard(originX, originY, ip6pSize1X.w, ip6pSize1X.h)
-    
+
     originX = originX + ip6pSize1X.w + 100
     newArtboard(originX, originY, ipXSize1X.w, ipXSize1X.h)
 
@@ -191,13 +191,13 @@ function enter() {
 
     originX = originX + ipXSMaxSize1X.w + 100
     newArtboard(originX, originY, andr1Size1X.w, andr1Size1X.h)
-    
+
     originX = originX + andr1Size1X.w + 100
     newArtboard(originX, originY, andr2Size1X.w, andr2Size1X.h)
-    
+
     originX = originX + andr2Size1X.w + 100
     newArtboard(originX, originY, andr3Size1X.w, andr3Size1X.h)
-    
+
     originX = originX + andr3Size1X.w + 100
     newArtboard(originX, originY, andr4Size1X.w, andr4Size1X.h)
 
@@ -229,7 +229,7 @@ function enter() {
     //
     //     originX = originX + andr2Size2X.w + 100
     //     newArtboard(originX, originY, andr3Size2X.w, andr3Size2X.h)
-    
+
     kdocument.showMessage('Success!');
 }
 
@@ -237,4 +237,3 @@ enter();
 
 
           };
-          
