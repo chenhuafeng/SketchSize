@@ -1,17 +1,17 @@
           var onRun = function(context) {
           //@1x 尺寸
-var ip4Size1X = {w:320, h:480}
-var ip5Size1X = {w:320, h:568}
-var ip6Size1X = {w:375, h:667}
-var ip6pSize1X = {w:414, h:736}
-var ipXSize1X = {w:375, h:812}
-var ipXSMaxSize1X = {w:414, h:896}
-var andr1Size1X = {w:240, h:400}
-var andr2Size1X = {w:240, h:427}
-var andr3Size1X = {w:300, h:450}
-var andr4Size1X = {w:360, h:640}
-var andr5Size1X = {w:540, h:960}
-var andr6Size1X = {w:576, h:960}
+var ip4Size1X = {w:320*2, h:480*2}
+var ip5Size1X = {w:320*2, h:568*2}
+var ip6Size1X = {w:375*2, h:667*2}
+var ip6pSize1X = {w:414*3, h:736*3}
+var ipXSize1X = {w:375*3, h:812*3}
+var ipXSMaxSize1X = {w:414*3, h:896*3}
+var andr1Size1X = {w:240*2, h:400*2}
+var andr2Size1X = {w:240*2, h:427*2}
+var andr3Size1X = {w:300*2, h:450*2}
+var andr4Size1X = {w:360*2, h:640*2}
+var andr5Size1X = {w:540*2, h:960*2}
+var andr6Size1X = {w:576*2, h:960*2}
 
 //@2x 尺寸
 var ip4Size2X = {w:640, h:960}
@@ -149,12 +149,16 @@ function newArtboard(newX, newY, newW, newH) {
     newFrame.setY(newY)
     newFrame.setWidth(newW)
     newFrame.setHeight(newH)
-    newBoard.setName(kcurArtboard.name() + '/' + newFrame.width()*2 + '×' + newFrame.height()*2)
-    if(newFrame.width() == 375 && newFrame.height() == 812) {
-        newBoard.setName(kcurArtboard.name() + '/' + 'iPhoneX')
+    // newBoard.setName(kcurArtboard.name() + '/' + newFrame.width() + '×' + newFrame.height())
+    newBoard.setName(newFrame.width() + '×' + newFrame.height() + '/' + newFrame.width() + '×' + newFrame.height() + '_' + kcurArtboard.name())
+
+    if(newFrame.width() == 375 * 3 && newFrame.height() == 812 * 3) {
+        // newBoard.setName(kcurArtboard.name() + '/' + 'iPhoneX')
+        newBoard.setName('iPhone X' + '/' + newFrame.width() + '×' + newFrame.height() + '_' + kcurArtboard.name())
     }
-    if(newFrame.width() == 414) {
-        newBoard.setName(kcurArtboard.name() + '/' + newFrame.width()*3 + '×' + newFrame.height()*3)
+
+    if(newFrame.height() == 896 * 3) {
+        newBoard.setName('iPhone XS Max' + '/' + newFrame.width() + '×' + newFrame.height() + '_' + kcurArtboard.name())
     }
 
     copyLayers(newBoard, curBoardW/newFrame.width(), curBoardH/newFrame.height())
@@ -172,40 +176,47 @@ function enter() {
     //@1x
     var originX = kcurArtboard.frame().x()
     var originY = kcurArtboard.frame().y() + kcurArtboard.frame().height() + 100
-    newArtboard(originX, originY, ip4Size1X.w, ip4Size1X.h)
 
-    originX = originX + ip4Size1X.w + 100
-    newArtboard(originX, originY, ip5Size1X.w, ip5Size1X.h)
+    if (kcurArtboard.frame().height() / kcurArtboard.frame().width() < 2) {
+        newArtboard(originX, originY, ip4Size1X.w, ip4Size1X.h)
 
-    originX = originX + ip5Size1X.w + 100
-    newArtboard(originX, originY, ip6Size1X.w, ip6Size1X.h)
+        originX = originX + ip4Size1X.w + 100
+        newArtboard(originX, originY, ip5Size1X.w, ip5Size1X.h)
 
-    originX = originX + ip6Size1X.w + 100
-    newArtboard(originX, originY, ip6pSize1X.w, ip6pSize1X.h)
+        originX = originX + ip5Size1X.w + 100
+        newArtboard(originX, originY, ip6Size1X.w, ip6Size1X.h)
 
-    originX = originX + ip6pSize1X.w + 100
-    newArtboard(originX, originY, ipXSize1X.w, ipXSize1X.h)
+        originX = originX + ip6Size1X.w + 100
+        newArtboard(originX, originY, ip6pSize1X.w, ip6pSize1X.h)
 
-    originX = originX + ipXSize1X.w + 100
-    newArtboard(originX, originY, ipXSMaxSize1X.w, ipXSMaxSize1X.h)
+        originX = originX + ip6pSize1X.w + 100
+        newArtboard(originX, originY, andr1Size1X.w, andr1Size1X.h)
 
-    originX = originX + ipXSMaxSize1X.w + 100
-    newArtboard(originX, originY, andr1Size1X.w, andr1Size1X.h)
+        originX = originX + andr1Size1X.w + 100
+        newArtboard(originX, originY, andr2Size1X.w, andr2Size1X.h)
 
-    originX = originX + andr1Size1X.w + 100
-    newArtboard(originX, originY, andr2Size1X.w, andr2Size1X.h)
+        originX = originX + andr2Size1X.w + 100
+        newArtboard(originX, originY, andr3Size1X.w, andr3Size1X.h)
 
-    originX = originX + andr2Size1X.w + 100
-    newArtboard(originX, originY, andr3Size1X.w, andr3Size1X.h)
+        originX = originX + andr3Size1X.w + 100
+        newArtboard(originX, originY, andr4Size1X.w, andr4Size1X.h)
 
-    originX = originX + andr3Size1X.w + 100
-    newArtboard(originX, originY, andr4Size1X.w, andr4Size1X.h)
+        originX = originX + andr4Size1X.w + 100
+        newArtboard(originX, originY, andr5Size1X.w, andr5Size1X.h)
 
-    originX = originX + andr4Size1X.w + 100
-    newArtboard(originX, originY, andr5Size1X.w, andr5Size1X.h)
+        originX = originX + andr5Size1X.w + 100
+        newArtboard(originX, originY, andr6Size1X.w, andr6Size1X.h)
 
-    originX = originX + andr5Size1X.w + 100
-    newArtboard(originX, originY, andr6Size1X.w, andr6Size1X.h)
+    } else {
+        newArtboard(originX, originY, ipXSize1X.w, ipXSize1X.h)
+
+        originX = originX + ipXSize1X.w + 100
+        newArtboard(originX, originY, ipXSMaxSize1X.w, ipXSMaxSize1X.h)
+
+        originX = originX + ipXSMaxSize1X.w + 100
+    }
+
+
 
     //@2x
     //     var originX = kcurArtboard.frame().x()
