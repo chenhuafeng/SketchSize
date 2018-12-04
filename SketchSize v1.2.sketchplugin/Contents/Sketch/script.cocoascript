@@ -13,14 +13,9 @@ var andr4Size1X = {w:360*2, h:640*2}
 var andr5Size1X = {w:540*2, h:960*2}
 var andr6Size1X = {w:576*2, h:960*2}
 
-//@2x 尺寸
-var ip4Size2X = {w:640, h:960}
-var ip5Size2X = {w:640, h:1136}
-var ip6Size2X = {w:750, h:1334}
-var ip6pSize3X = {w:1242, h:2208}
-var andr1Size2X = {w:480, h:800}
-var andr2Size2X = {w:720, h:1280}
-var andr3Size2X = {w:1080, h:1920}
+var array1 = new Array(ip4Size1X, ip5Size1X, ip6Size1X, ip6pSize1X, andr1Size1X, andr2Size1X, andr3Size1X, andr4Size1X, andr5Size1X, andr6Size1X)
+var array2 = new Array(ipXSize1X, ipXSMaxSize1X)
+
 
 //全局
 var kdocument = context.document                       //当前document
@@ -173,73 +168,20 @@ function newArtboard(newX, newY, newW, newH) {
 
 //入口
 function enter() {
-    //@1x
+    var array
+    if (kcurArtboard.frame().height() / kcurArtboard.frame().width() < 2) {
+        array = array1
+    } else {
+        array = array2
+    }
+
     var originX = kcurArtboard.frame().x()
     var originY = kcurArtboard.frame().y() + kcurArtboard.frame().height() + 100
 
-    if (kcurArtboard.frame().height() / kcurArtboard.frame().width() < 2) {
-        newArtboard(originX, originY, ip4Size1X.w, ip4Size1X.h)
-
-        originX = originX + ip4Size1X.w + 100
-        newArtboard(originX, originY, ip5Size1X.w, ip5Size1X.h)
-
-        originX = originX + ip5Size1X.w + 100
-        newArtboard(originX, originY, ip6Size1X.w, ip6Size1X.h)
-
-        originX = originX + ip6Size1X.w + 100
-        newArtboard(originX, originY, ip6pSize1X.w, ip6pSize1X.h)
-
-        originX = originX + ip6pSize1X.w + 100
-        newArtboard(originX, originY, andr1Size1X.w, andr1Size1X.h)
-
-        originX = originX + andr1Size1X.w + 100
-        newArtboard(originX, originY, andr2Size1X.w, andr2Size1X.h)
-
-        originX = originX + andr2Size1X.w + 100
-        newArtboard(originX, originY, andr3Size1X.w, andr3Size1X.h)
-
-        originX = originX + andr3Size1X.w + 100
-        newArtboard(originX, originY, andr4Size1X.w, andr4Size1X.h)
-
-        originX = originX + andr4Size1X.w + 100
-        newArtboard(originX, originY, andr5Size1X.w, andr5Size1X.h)
-
-        originX = originX + andr5Size1X.w + 100
-        newArtboard(originX, originY, andr6Size1X.w, andr6Size1X.h)
-
-    } else {
-        newArtboard(originX, originY, ipXSize1X.w, ipXSize1X.h)
-
-        originX = originX + ipXSize1X.w + 100
-        newArtboard(originX, originY, ipXSMaxSize1X.w, ipXSMaxSize1X.h)
-
-        originX = originX + ipXSMaxSize1X.w + 100
+    for (x in array) {
+        newArtboard(originX, originY, array[x].w, array[x].h)
+        originX = originX + array[x].w + 100
     }
-
-
-
-    //@2x
-    //     var originX = kcurArtboard.frame().x()
-    //     var originY = kcurArtboard.frame().y() + kcurArtboard.frame().height() + 100
-    //     newArtboard(originX, originY, ip4Size2X.w, ip4Size2X.h)
-    //
-    //     originX = originX + ip4Size2X.w + 100
-    //     newArtboard(originX, originY, ip5Size2X.w, ip5Size2X.h)
-    //
-    //     originX = originX + ip5Size2X.w + 100
-    //     newArtboard(originX, originY, ip6Size2X.w, ip6Size2X.h)
-    //
-    //     originX = originX + ip6Size2X.w + 100
-    //     newArtboard(originX, originY, ip6pSize3X.w, ip6pSize3X.h)
-    //
-    //     originX = originX + ip6pSize3X.w + 100
-    //     newArtboard(originX, originY, andr1Size2X.w, andr1Size2X.h)
-    //
-    //     originX = originX + andr1Size2X.w + 100
-    //     newArtboard(originX, originY, andr2Size2X.w, andr2Size2X.h)
-    //
-    //     originX = originX + andr2Size2X.w + 100
-    //     newArtboard(originX, originY, andr3Size2X.w, andr3Size2X.h)
 
     kdocument.showMessage('Success!');
 }
@@ -247,4 +189,4 @@ function enter() {
 enter();
 
 
-          };
+};
